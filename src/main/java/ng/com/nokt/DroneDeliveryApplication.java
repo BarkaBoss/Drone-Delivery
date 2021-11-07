@@ -32,13 +32,13 @@ public class DroneDeliveryApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Medicine paracetamol = new Medicine("Paracetamol", 80,"PARA789","url_here");
+		Medicine paracetamol = new Medicine("Paracetamol", 10,"PARA789","url_here");
 		Medicine panadol = new Medicine("Panadol", 30,"PAN789","pan_url_here");
 		this.medicineService.createMedicine(paracetamol);
 		this.medicineService.createMedicine(panadol);
 		
 		List<DroneEntity> drones = new LinkedList<DroneEntity>();
-		drones.add(new DroneEntity("DJI2672","LightWeight", 100, 50, "LOADING",
+		drones.add(new DroneEntity("DJI2672","LightWeight", 100, 20, "LOADING",
 				Arrays.asList(new Medicine[] {
 						paracetamol,
 						panadol

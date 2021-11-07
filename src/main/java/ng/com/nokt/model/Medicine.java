@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import ng.com.nokt.repository.RegExHelper;
-
 @Entity
 @Table(name="medicine")
 public class Medicine {

@@ -9,6 +9,9 @@ import ng.com.nokt.model.DroneEntity;
 
 public interface DroneRepository extends JpaRepository<DroneEntity, Long>{
 	
-	@Query("SELECT drone FROM DroneEntity drone WHERE drone.state = 'IDLE' or drone.batteryCapacity > 25")
+	@Query("SELECT drone FROM DroneEntity drone WHERE drone.state = 'IDLE' and drone.batteryCapacity > 25")
 	List<DroneEntity> getAllDronesByState();
+	
+	@Query("SELECT capacity FROM DroneEntity capacity WHERE capacity.id = 'IDLE'")
+	String getCapacity();
 }

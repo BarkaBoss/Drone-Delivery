@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ng.com.nokt.exception.ResourceNotFoundException;
 import ng.com.nokt.model.DroneEntity;
 import ng.com.nokt.model.Medicine;
-import ng.com.nokt.repository.MedicineRepository;
 import ng.com.nokt.service.DroneService;
 import ng.com.nokt.service.MedicineService;
 
@@ -31,10 +29,6 @@ public class DispatchController {
 	@Autowired
 	MedicineService medicineService;
 	
-	/*@RequestMapping("/drone/{id}")
-	public String drone(@PathVariable Long id, Model model) {
-		
-	}*/
 	@RequestMapping("/drone")
 	public String hello() {
 		return "Hello";
@@ -67,7 +61,7 @@ public class DispatchController {
 	}
 	
 	@PostMapping("/drones/{id}/medicine/{medicineId}")
-	public boolean addMedicineToDrone(@PathVariable Long id, @PathVariable Long medicineId){
+	public ResponseEntity<DroneEntity> addMedicineToDrone(@PathVariable Long id, @PathVariable Long medicineId){
 		Medicine medicine = medicineService.getMedicineById(medicineId);
 		DroneEntity drone = droneService.getDroneById(id);
 		List<Medicine> medicineOnDrone = drone.getMedicine();
@@ -80,15 +74,21 @@ public class DispatchController {
 		totalCarryingWeight += medicine.getWeight();
 		
 		if(totalCarryingWeight > droneMaxWeight || !drone.getState().equals("LOADING")) {
+			ResponseEntity.ok().body("This Drone Can't Carry anymore weight");
 			throw new ResourceNotFoundException("This Drone Can't Carry anymore weight");
 		}else {
-			ResponseEntity.ok().body(drone.getMedicine().add(medicine));
-			return true;
+			drone.getMedicine().add(medicine);
+			return ResponseEntity.ok().body(droneService.updateDrone(drone));
 		}
 	}
 	
 	@GetMapping("/drones/ready")
 	public ResponseEntity<List<DroneEntity>> getDroneByState(){
 		return ResponseEntity.ok().body(droneService.getAllDronesByState());
+	}
+	
+	@GetMapping("/drones/battery/{id}")
+	public ResponseEntity<Integer> getDroneBatteryById(@PathVariable long id){
+		return ResponseEntity.ok().body(droneService.getDroneById(id).getBatteryCapacity());
 	}
 }

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -25,7 +26,7 @@ public class DroneEntity {
 	@Column(name="model")
 	private String model;
 	
-	@Size(max=500, message="Weight can not be more than 500grams")
+	@Max(message="Weight can not be more than 500grams", value = 500)
 	@Column(name="max_weight")
 	private int maxWeight;
 	
