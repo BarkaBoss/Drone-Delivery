@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,16 +17,23 @@ public class DroneEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name="serial_number")
+
+	@Column(name="serial_number", length = 100)
 	private String serialNumber;
 	
 	@Column(name="model")
 	private String model;
+	
+	@Column(name="max_weight")
 	private int maxWeight;
+	
+	@Column(name="battery_capacity")
 	private int batteryCapacity;
+	
+	@Column(name="state")
 	private String state;
 	
+	@ManyToMany
 	private List<Medicine> medicine;
 	
 	public DroneEntity() {
@@ -41,6 +49,16 @@ public class DroneEntity {
 		this.batteryCapacity = batteryCapacity;
 		this.state = state;
 		this.medicine = medicine;
+	}
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getSerialNumber() {
@@ -94,11 +112,15 @@ public class DroneEntity {
 	
 	public boolean checkWeight(Medicine medicine) {
 		int totalWeight = 0;
-		
-		for(Medicine carriedMedicine: getMedicine()) {
-			totalWeight += carriedMedicine.getWeight();
+
+		if(!getMedicine().isEmpty()) {
+			for(Medicine carriedMedicine: getMedicine()) {
+				totalWeight += carriedMedicine.getWeight();
+			}
+			System.out.println("Weight on drone"+ totalWeight);
 		}
 		totalWeight += medicine.getWeight();
+		System.out.println("New Weight"+ totalWeight);
 		
 		if(totalWeight > getMaxWeight()) {
 			return false;

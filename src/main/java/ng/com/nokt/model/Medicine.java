@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ng.com.nokt.repository.RegExHelper;
+
 @Entity
 @Table(name="medicine")
 public class Medicine {
@@ -36,6 +38,14 @@ public class Medicine {
 		super();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -57,7 +67,11 @@ public class Medicine {
 	}
 
 	public void setCode(String code) {
-		this.code = code;
+		if(RegExHelper.medicineCodeChecker(code)) {
+			this.code = code;
+		}else {
+			System.out.print("Medicine code can only be Uppercase letters, numbers or underscore");
+		}
 	}
 
 	public String getImgUrl() {
