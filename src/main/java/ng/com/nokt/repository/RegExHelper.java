@@ -9,7 +9,7 @@ public class RegExHelper {
 
         boolean matchedCriteria = true;
 
-        String regex = "^[A-Z0-9_]*$";
+        String regex = "^[A-Z0-9_-]*$";
 
         Pattern pattern = Pattern.compile(regex);
 
