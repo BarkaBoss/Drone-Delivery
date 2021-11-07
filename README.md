@@ -29,6 +29,8 @@ Adds new Drone to the Database
 Add new Medicine to DB
 <img src="https://github.com/BarkaBoss/Drone-Delivery/blob/main/image_ui/add_drones.png" width="400" alt="Add Medicine to DB"/>
 
+
+Medicine Name and Code follow RegEx "^[a-zA-Z_-]*$" and "^[a-zA-Z0-9_]*$" Respectively
 POSTMAN file => *DispatchREST_API.postman_collection.json*
 
 # Summary
