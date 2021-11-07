@@ -19,7 +19,7 @@ This end point returns the Drones in IDLE state with battery over 25% (This shou
 
 4. POST Medicine to drone "localhost:8080/drones/2/medicine/3"
 This end point adds a medicine to a drone as long as the new medicine does not exceed the maximum weight
-<img src="ihttps://github.com/BarkaBoss/Drone-Delivery/blob/main/image_ui/add_meds_to_drone.png" width="400" alt="Photo of Getting All Drones Ready for Dispatch"/>
+<img src="https://github.com/BarkaBoss/Drone-Delivery/blob/main/image_ui/add_meds_to_drone.png" width="400" alt="Photo of Getting All Drones Ready for Dispatch"/>
 
 5. POST Create Drone "localhost:8080/drones/"
 Adds new Drone to the Database
