@@ -14,16 +14,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ng.com.nokt.model.DroneEntity;
 import ng.com.nokt.model.Medicine;
 import ng.com.nokt.repository.MedicineRepository;
 import ng.com.nokt.service.DroneService;
+import ng.com.nokt.service.MedicineService;
 
 @RestController
 public class MedicineController {
 
 	@Autowired
-	DroneService droneService;
+	MedicineService medicineService;
 	
-	@Autowired
-	MedicineRepository medicineRepository;
+	/*@RequestMapping("/drone/{id}")
+	public String drone(@PathVariable Long id, Model model) {
+		
+	}*/
+	
+	@RequestMapping("/medicine")
+	@GetMapping("/medicines")
+	public ResponseEntity<List<Medicine>> getAllMedicines(){
+		return ResponseEntity.ok().body(medicineService.getAllMedicine());
+	}
+	
+	@GetMapping("/medicines/{id}")
+	public ResponseEntity<Medicine> getMedicineById(@PathVariable long id){
+		return ResponseEntity.ok().body(medicineService.getMedicineById(id));
+	}
+	
+	@PostMapping("/medicine")
+	public ResponseEntity<Medicine> createMedicine(@RequestBody Medicine medicine){
+		return ResponseEntity.ok().body(medicineService.createMedicine(medicine));
+	}
+	
+	@PutMapping("/medicine/{id}")
+	public ResponseEntity<Medicine> updateDrone(@PathVariable long id, @RequestBody Medicine medicine){
+		return ResponseEntity.ok().body(medicineService.updateMedicine(medicine));
+	}
+	
+	@DeleteMapping("/medicine/{id}")
+	public HttpStatus deleteDrone(@PathVariable long id){
+		this.medicineService.deleteMedicine(id);
+		return HttpStatus.OK;
+	}
 }

@@ -86,4 +86,9 @@ public class DispatchController {
 			return true;
 		}
 	}
+	
+	@GetMapping("/drones/ready")
+	public ResponseEntity<List<DroneEntity>> getDroneByState(){
+		return ResponseEntity.ok().body(droneService.getAllDronesByState());
+	}
 }

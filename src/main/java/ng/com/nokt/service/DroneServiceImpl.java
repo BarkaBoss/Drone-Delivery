@@ -69,4 +69,10 @@ public class DroneServiceImpl implements DroneService{
 		return this.droneRepository.findAll();
 	}
 
+	@Override
+	public List<DroneEntity> getAllDronesByState() {
+		// TODO Auto-generated method stub
+		return this.droneRepository.getAllDronesByState();
+	}
+
 }
