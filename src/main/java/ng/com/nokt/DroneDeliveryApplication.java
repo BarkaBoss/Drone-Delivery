@@ -32,16 +32,33 @@ public class DroneDeliveryApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Medicine paracetamol = new Medicine("Paracetamol", 10,"PARA789","url_here");
-		Medicine panadol = new Medicine("Panadol", 30,"PAN789","pan_url_here");
+		Medicine paracetamol = new Medicine("Paracetamol", 10,"PARA789","para_url");
+		Medicine panadol = new Medicine("Panadol", 30,"PAN789","pan_url");
+		Medicine mixagrip = new Medicine("Mixagrip", 30,"MIX_345","mix__url");
 		this.medicineService.createMedicine(paracetamol);
 		this.medicineService.createMedicine(panadol);
+		this.medicineService.createMedicine(mixagrip);
 		
 		List<DroneEntity> drones = new LinkedList<DroneEntity>();
-		drones.add(new DroneEntity("DJI2672","LightWeight", 100, 20, "LOADING",
+		drones.add(new DroneEntity("DJI-MINI-SE","Lightweight", 100, 20, "LOADING",
 				Arrays.asList(new Medicine[] {
 						paracetamol,
 						panadol
+				})));
+
+		drones.add(new DroneEntity("Autel-200","Middleweight", 300, 20, "IDLE",
+				Arrays.asList(new Medicine[] {
+						paracetamol,
+						mixagrip
+				})));
+		drones.add(new DroneEntity("DJI-MAVIC-3","Headvyweight", 500, 50, "IDLE",
+				Arrays.asList(new Medicine[] {
+						panadol,
+						mixagrip
+				})));
+		drones.add(new DroneEntity("DJI-PHANTOM-4","Headvyweight", 400, 20, "LOADED",
+				Arrays.asList(new Medicine[] {
+						
 				})));
 		for(DroneEntity drone : drones) {
 			droneService.createDrone(drone);
