@@ -1,14 +1,17 @@
 package ng.com.nokt;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import ng.com.nokt.model.DroneEntity;
 import ng.com.nokt.model.Medicine;
-import ng.com.nokt.repository.MedicineRepository;
 import ng.com.nokt.service.DroneService;
 import ng.com.nokt.service.MedicineService;
 
@@ -21,7 +24,7 @@ public class DroneDeliveryApplication implements CommandLineRunner{
 	DroneService droneService;
 	
 	@Autowired
-	MedicineRepository medicineRepository;
+	MedicineService medicineService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DroneDeliveryApplication.class, args);
@@ -29,9 +32,20 @@ public class DroneDeliveryApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Medicine paracetamol = new Medicine("paracetamol", 10,"GHJ789","url_here");
+		Medicine paracetamol = new Medicine("Paracetamol", 80,"PARA789","url_here");
+		Medicine panadol = new Medicine("Panadol", 30,"PAN789","pan_url_here");
+		this.medicineService.createMedicine(paracetamol);
+		this.medicineService.createMedicine(panadol);
 		
-		this.medicineRepository.save(paracetamol);
+		List<DroneEntity> drones = new LinkedList<DroneEntity>();
+		drones.add(new DroneEntity("DJI2672","LightWeight", 100, 50, "LOADING",
+				Arrays.asList(new Medicine[] {
+						paracetamol,
+						panadol
+				})));
+		for(DroneEntity drone : drones) {
+			droneService.createDrone(drone);
+		}
 		
 	}
 }

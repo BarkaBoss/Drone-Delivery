@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ng.com.nokt.exception.ResourceNotFoundException;
 import ng.com.nokt.model.Medicine;
 import ng.com.nokt.repository.MedicineRepository;
 
+@Service
+@Transactional
 public class MedicineServiceImpl implements MedicineService{
 
 	@Autowired
@@ -43,7 +47,7 @@ public class MedicineServiceImpl implements MedicineService{
 	}
 
 	@Override
-	public Medicine getMedicineId(long id) {
+	public Medicine getMedicineById(long id) {
 		Optional<Medicine> medicineDb = this.medicineRepository.findById(id);
 		if(medicineDb.isPresent()) {
 			return medicineDb.get();

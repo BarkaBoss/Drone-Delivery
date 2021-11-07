@@ -66,7 +66,11 @@ public class DroneEntity {
 	}
 
 	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
+		if(serialNumber.length() <= 100) {
+			this.serialNumber = serialNumber;
+		}else {
+			System.out.print("Serial Number Should Not be longer than 100 characters");
+		}
 	}
 
 	public String getModel() {

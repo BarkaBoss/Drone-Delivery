@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ng.com.nokt.exception.ResourceNotFoundException;
 import ng.com.nokt.model.DroneEntity;
+import ng.com.nokt.model.Medicine;
 import ng.com.nokt.repository.MedicineRepository;
 import ng.com.nokt.service.DroneService;
+import ng.com.nokt.service.MedicineService;
 
 @RestController
 public class DispatchController {
@@ -25,7 +29,7 @@ public class DispatchController {
 	DroneService droneService;
 	
 	@Autowired
-	MedicineRepository medicineRepository;
+	MedicineService medicineService;
 	
 	/*@RequestMapping("/drone/{id}")
 	public String drone(@PathVariable Long id, Model model) {
@@ -60,5 +64,26 @@ public class DispatchController {
 	public HttpStatus deleteDrone(@PathVariable long id){
 		this.droneService.deleteDrone(id);
 		return HttpStatus.OK;
+	}
+	
+	@PostMapping("/drones/{id}/medicine/{medicineId}")
+	public boolean addMedicineToDrone(@PathVariable Long id, @PathVariable Long medicineId){
+		Medicine medicine = medicineService.getMedicineById(medicineId);
+		DroneEntity drone = droneService.getDroneById(id);
+		List<Medicine> medicineOnDrone = drone.getMedicine();
+		
+		int droneMaxWeight = drone.getMaxWeight();
+		int totalCarryingWeight = 0;
+		for(Medicine med : medicineOnDrone) {
+			totalCarryingWeight += med.getWeight();
+		}
+		totalCarryingWeight += medicine.getWeight();
+		
+		if(totalCarryingWeight > droneMaxWeight || !drone.getState().equals("LOADING")) {
+			throw new ResourceNotFoundException("This Drone Can't Carry anymore weight");
+		}else {
+			ResponseEntity.ok().body(drone.getMedicine().add(medicine));
+			return true;
+		}
 	}
 }

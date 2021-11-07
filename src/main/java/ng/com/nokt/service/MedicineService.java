@@ -8,6 +8,6 @@ public interface MedicineService {
 	Medicine createMedicine(Medicine medicine);
 	Medicine updateMedicine(Medicine medicine);
 	List<Medicine> getAllMedicine();
-	Medicine getMedicineId(long id);
+	Medicine getMedicineById(long id);
 	void deleteMedicine(long id);
 }

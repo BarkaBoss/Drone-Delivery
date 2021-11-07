@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import ng.com.nokt.repository.RegExHelper;
 
@@ -17,10 +18,13 @@ public class Medicine {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@Pattern(regexp="^[a-zA-Z_-]*$", message="Medicine Name can only contain Alphabets, numbers, dash(-) or underscore(_)")
 	@Column(name="name")
 	private String name;
 	
 	private int weight;
+	
+	@Pattern(regexp="^[a-zA-Z0-9_]*$", message="Medicine code can only contain Uppercase letters, numbers or underscore(_)")
 	private String code;
 	
 	@Column(name="img_url")
@@ -67,11 +71,7 @@ public class Medicine {
 	}
 
 	public void setCode(String code) {
-		if(RegExHelper.medicineCodeChecker(code)) {
-			this.code = code;
-		}else {
-			System.out.print("Medicine code can only be Uppercase letters, numbers or underscore");
-		}
+		this.code = code;
 	}
 
 	public String getImgUrl() {
