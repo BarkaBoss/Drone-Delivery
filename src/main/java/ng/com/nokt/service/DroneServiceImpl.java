@@ -71,7 +71,6 @@ public class DroneServiceImpl implements DroneService{
 
 	@Override
 	public List<DroneEntity> getAllDronesByState() {
-		// TODO Auto-generated method stub
 		return this.droneRepository.getAllDronesByState();
 	}
 
