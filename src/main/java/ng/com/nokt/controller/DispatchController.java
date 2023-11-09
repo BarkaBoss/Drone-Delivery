@@ -38,6 +38,11 @@ public class DispatchController {
 	public ResponseEntity<List<DroneEntity>> getAllDrones(){
 		return ResponseEntity.ok().body(droneService.getAllDrones());
 	}
+
+	@GetMapping("/drone10/{capacity}")
+	public ResponseEntity<List<DroneEntity>> getDroneCapacityGreaterThan(@PathVariable int capacity){
+		return ResponseEntity.ok().body(droneService.getDroneByCapacityGreaterThan(capacity));
+	}
 	
 	@GetMapping("/drones/{id}")
 	public ResponseEntity<DroneEntity> getDroneById(@PathVariable long id){

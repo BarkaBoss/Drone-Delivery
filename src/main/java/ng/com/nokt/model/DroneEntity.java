@@ -1,5 +1,7 @@
 package ng.com.nokt.model;
 
+import org.hibernate.annotations.Type;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 
@@ -30,7 +33,7 @@ public class DroneEntity {
 	@Max(message="Weight can not be more than 500grams", value = 500)
 	@Column(name="max_weight")
 	private int maxWeight;
-	
+
 	@Column(name="battery_capacity")
 	private int batteryCapacity;
 	

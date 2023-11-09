@@ -55,6 +55,11 @@ public class DroneServiceImpl implements DroneService{
 	}
 
 	@Override
+	public List<DroneEntity> getDroneByCapacityGreaterThan(int capacity) {
+		return droneRepository.findByBatteryCapacityGreaterThan(capacity);
+	}
+
+	@Override
 	public void deleteDrone(long id) {
 		Optional<DroneEntity> droneDb = this.droneRepository.findById(id);
 		if(droneDb.isPresent()) {

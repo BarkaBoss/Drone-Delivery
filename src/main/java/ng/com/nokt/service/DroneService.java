@@ -11,5 +11,7 @@ public interface DroneService {
 	List<DroneEntity> getAllDrones();
 	List<DroneEntity> getAllDronesByState();
 	DroneEntity getDroneById(long id);
+
+	List <DroneEntity> getDroneByCapacityGreaterThan(int capacity);
 	void deleteDrone(long id);
 }

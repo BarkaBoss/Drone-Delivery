@@ -12,6 +12,8 @@ public interface DroneRepository extends JpaRepository<DroneEntity, Long>{
 	@Query("SELECT drone FROM DroneEntity drone WHERE drone.state = 'IDLE' and drone.batteryCapacity > 25")
 	List<DroneEntity> getAllDronesByState();
 	
-	@Query("SELECT capacity FROM DroneEntity capacity WHERE capacity.id = 'IDLE'")
+	@Query("SELECT capacity FROM DroneEntity capacity")
 	String getCapacity();
+
+	List<DroneEntity> findByBatteryCapacityGreaterThan(int capacity);
 }
