@@ -89,11 +89,14 @@ public class DispatchController {
 	
 	@GetMapping("/drones/ready")
 	public ResponseEntity<List<DroneEntity>> getDroneByState(){
-		return ResponseEntity.ok().body(droneService.getAllDronesByState());
+		return ResponseEntity.ok()
+				.body(droneService.getAllDronesByState());
 	}
 	
 	@GetMapping("/drones/battery/{id}")
 	public ResponseEntity<Integer> getDroneBatteryById(@PathVariable long id){
-		return ResponseEntity.ok().body(droneService.getDroneById(id).getBatteryCapacity());
+		return ResponseEntity.ok()
+				.body(droneService.getDroneById(id)
+						.getBatteryCapacity());
 	}
 }
